@@ -56,18 +56,27 @@
                     配置专属落地节点 (住宅 IP)
                 </h2>
                 <div class="space-y-3">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-700">协议 <span class="text-red-500">*</span></label>
-                        <select id="proxyProtocol" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500 bg-white">
-                            <option value="socks">SOCKS5</option>
-                            <option value="http">HTTP / HTTPS</option>
-                        </select>
+                    <div class="flex gap-2">
+                        <div class="w-1/2">
+                            <label class="block text-xs font-medium text-gray-700">协议 <span class="text-red-500">*</span></label>
+                            <select id="proxyProtocol" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500 bg-white">
+                                <option value="socks">SOCKS5</option>
+                                <option value="http">HTTP / HTTPS</option>
+                            </select>
+                        </div>
+                        <div class="w-1/2">
+                            <label class="block text-xs font-medium text-gray-700">注入模式 <span class="text-red-500">*</span></label>
+                            <select id="injectMode" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500 bg-white">
+                                <option value="append" selected>追加新节点 (多节点分流)</option>
+                                <option value="overwrite">覆盖原有落地节点</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="flex gap-2">
                         <div class="w-2/3">
                             <label class="block text-xs font-medium text-gray-700">代理 IP 地址 <span class="text-red-500">*</span></label>
-                            <input type="text" id="proxyIp" placeholder="例如: 192.168.1.1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                            <input type="text" id="proxyIp" placeholder="例如: 192.200.193.141" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
                         </div>
                         <div class="w-1/3">
                             <label class="block text-xs font-medium text-gray-700">端口 <span class="text-red-500">*</span></label>
@@ -106,6 +115,18 @@ domain:chatgpt.com</textarea>
             <button onclick="generateConfig()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-200 transform hover:-translate-y-0.5">
                 🚀 一键注入并生成新配置
             </button>
+
+            <!-- 注入模式注解：已更新顺序 -->
+            <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100 text-xs text-blue-800 leading-relaxed shadow-sm">
+                <p class="font-bold mb-2 flex items-center text-sm">
+                    <svg class="w-4 h-4 mr-1 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                    注入模式说明
+                </p>
+                <ul class="space-y-1.5 list-disc pl-4 text-blue-700">
+                    <li><span class="font-semibold text-blue-900">追加模式（默认）：</span>保留以前配置好的住宅节点，额外添加新节点。适合高阶玩家配置“多国家多 IP 精准分流”。</li>
+                    <li><span class="font-semibold text-blue-900">覆盖模式：</span>一键清理本工具曾经生成的所有住宅节点，重置为当前最新配置，有效防止配置冲突出错。</li>
+                </ul>
+            </div>
         </div>
 
         <!-- 右侧代码区 -->
@@ -150,8 +171,8 @@ domain:chatgpt.com</textarea>
                 <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
                 在 GitHub 上点亮 Star ⭐
             </a>
-            <a href="https://playfulsoul.net" target="_blank" class="flex items-center text-blue-600 hover:text-blue-800 transition font-bold bg-white px-3 py-1.5 rounded-lg shadow-sm border border-gray-200">
-                访问作者博客
+            <a href="https://www.youtube.com/@playfulsoul-net" target="_blank" class="flex items-center text-blue-600 hover:text-blue-800 transition font-bold bg-white px-3 py-1.5 rounded-lg shadow-sm border border-gray-200">
+                订阅作者 YouTube
             </a>
         </div>
     </div>
@@ -183,12 +204,11 @@ domain:chatgpt.com</textarea>
             catch (e) { throw new Error("JSON 解析失败。请检查原配置是否有漏掉的逗号或括号！\n报错信息: " + e.message); }
         }
 
-        // 辅助函数：通过关键字符串模糊估算行号范围
         function findLineRange(fullString, searchKey, blockLinesLength) {
             const index = fullString.indexOf(searchKey);
             if (index === -1) return "--";
             const upToKeyword = fullString.substring(0, index);
-            const startLine = upToKeyword.split('\n').length - 2; // 大概往上退2行到花括号
+            const startLine = upToKeyword.split('\n').length - 2;
             const endLine = startLine + blockLinesLength;
             return `第 ${startLine} ~ ${endLine}`;
         }
@@ -196,6 +216,7 @@ domain:chatgpt.com</textarea>
         function generateConfig() {
             const inputConfigText = document.getElementById('inputConfig').value.trim();
             const protocol = document.getElementById('proxyProtocol').value;
+            const injectMode = document.getElementById('injectMode').value;
             const ip = document.getElementById('proxyIp').value.trim();
             const port = parseInt(document.getElementById('proxyPort').value.trim());
             const user = document.getElementById('proxyUser').value.trim();
@@ -209,7 +230,12 @@ domain:chatgpt.com</textarea>
             try { config = parseJSONC(inputConfigText); } 
             catch (error) { alert(error.message); return; }
 
-            const tagId = "Static-ISP-Proxy";
+            let tagId = "Static-ISP-Proxy";
+            if (injectMode === "append") {
+                const safeIp = ip.replace(/[^a-zA-Z0-9]/g, '-');
+                tagId = "Static-ISP-Proxy-" + safeIp;
+            }
+
             let staticIspOutbound = {
                 "tag": tagId,
                 "protocol": protocol,
@@ -230,9 +256,19 @@ domain:chatgpt.com</textarea>
             if (!config.routing) config.routing = { rules: [] };
             if (!config.routing.rules) config.routing.rules = [];
 
-            // 过滤旧标签，兼容历史旧版的 Static-ISP-socks5 标签以便无缝升级
-            config.outbounds = config.outbounds.filter(out => out.tag !== tagId && out.tag !== "Static-ISP-socks5");
-            config.routing.rules = config.routing.rules.filter(rule => rule.outboundTag !== tagId && rule.outboundTag !== "Static-ISP-socks5");
+            if (injectMode === "overwrite") {
+                config.outbounds = config.outbounds.filter(out => {
+                    if (!out.tag) return true;
+                    return !out.tag.startsWith("Static-ISP-Proxy") && out.tag !== "Static-ISP-socks5";
+                });
+                config.routing.rules = config.routing.rules.filter(rule => {
+                    if (!rule.outboundTag) return true;
+                    return !rule.outboundTag.startsWith("Static-ISP-Proxy") && rule.outboundTag !== "Static-ISP-socks5";
+                });
+            } else {
+                config.outbounds = config.outbounds.filter(out => out.tag !== tagId);
+                config.routing.rules = config.routing.rules.filter(rule => rule.outboundTag !== tagId);
+            }
 
             let insertIndex = config.outbounds.findIndex(out => out.tag === "direct") + 1;
             config.outbounds.splice(insertIndex > 0 ? insertIndex : 0, 0, staticIspOutbound);
@@ -247,9 +283,8 @@ domain:chatgpt.com</textarea>
             const lineNumbersHtml = Array.from({length: lineCount}, (_, i) => i + 1).join('\n');
             document.getElementById('lineNumbers').textContent = lineNumbersHtml;
 
-            // 动态计算行号并展示底部提示栏
-            const userLines = user && pass ? 10 : 8; // 出站代码大概的行数跨度
-            const routeLines = domainList.length + 3; // 路由代码大概的行数跨度
+            const userLines = user && pass ? 10 : 8;
+            const routeLines = domainList.length + 3;
             
             document.getElementById('successTag').textContent = tagId;
             document.getElementById('lineOutbound').textContent = findLineRange(finalJsonString, `"tag": "${tagId}"`, userLines);
@@ -280,7 +315,7 @@ domain:chatgpt.com</textarea>
                 textArea.value = codeText;
                 document.body.appendChild(textArea);
                 textArea.select();
-                try { document.execCommand('copy'); alert('复制成功'); } catch (err) { alert('复制失败，请手动全选'); }
+                try { document.execCommand('copy'); } catch (err) {}
                 document.body.removeChild(textArea);
             });
         }
