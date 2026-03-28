@@ -40,6 +40,7 @@
 如果你觉得这个小工具为你省去了排错的麻烦，或者帮到了你，请给这个项目点亮一颗 **Star ⭐**！这是对创作者最大的鼓励。
 
 - **作者博客**: [Playfulsoul有什么好玩](https://playfulsoul.net/) - 探索更多有趣的 VPS 玩法与网络技术。
+- **作者YouTube**：[PlayfulSoul有什么好玩]（https://www.youtube.com/@playfulsoul-net/）
 - **问题反馈**: 如果在使用中遇到任何 BUG 或有新功能建议，欢迎提交 [Issue](https://www.google.com/search?q=https://github.com/playfulsoul/xui-routing-generator/issues)。
 
 *© 2026 Playfulsoul. All Rights Reserved.*
