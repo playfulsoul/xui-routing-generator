@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X-UI 出站分流一键生成器 - Playfulsoul</title>
+    <title>X-UI 配置模块化编辑器 - Playfulsoul</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
@@ -12,313 +12,436 @@
         ::-webkit-scrollbar-track { background: #1f2937; border-radius: 4px; }
         ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
-        .left-panel::-webkit-scrollbar-track { background: #f3f4f6; }
-        .left-panel::-webkit-scrollbar-thumb { background: #d1d5db; }
-        .left-panel::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f3f4f6; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #d1d5db; }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+<body class="bg-gray-50 min-h-screen p-4 md:p-8 flex flex-col">
 
-    <!-- 顶部标题区 -->
-    <div class="w-full max-w-7xl mb-6 flex flex-col md:flex-row items-center justify-between text-center md:text-left">
-        <div>
-            <h1 class="text-3xl font-black text-gray-800 tracking-tight flex items-center justify-center md:justify-start">
-                <svg class="w-8 h-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                X-UI 出站分流一键生成器
-            </h1>
-            <p class="text-sm text-gray-500 mt-2">
-                智能无损注入静态住宅 IP，保护核心资产，提升科学上网体验。
-            </p>
+    <!-- 顶部导航 -->
+    <div class="max-w-6xl w-full mx-auto mb-8 flex flex-col md:flex-row items-center justify-between">
+        <div class="flex items-center">
+            <div class="bg-blue-600 p-2 rounded-lg shadow-lg mr-4">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a2 2 0 002 2h3a1 1 0 011 1v13a1 1 0 01-1 1H3a1 1 0 01-1-1V7a1 1 0 011-1h3a2 2 0 002-2V4z"></path></svg>
+            </div>
+            <div>
+                <h1 class="text-2xl font-black text-gray-800 tracking-tight">X-UI 配置模块化编辑器</h1>
+                <p class="text-sm text-gray-500">集成式管理出站节点与路由分流</p>
+            </div>
         </div>
-        <div class="mt-4 md:mt-0 text-sm font-medium text-gray-600 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-200">
-            来自：<a href="https://www.youtube.com/@playfulsoul-net" target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline font-bold transition">Playfulsoul有什么好玩</a>
+        <div class="mt-4 md:mt-0">
+            <a href="https://www.youtube.com/@playfulsoul-net" target="_blank" class="text-sm font-bold text-blue-600 bg-white px-5 py-2.5 rounded-full shadow-sm border border-blue-100 hover:bg-blue-50 transition flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                订阅 YouTube 频道
+            </a>
         </div>
     </div>
 
     <!-- 主体工具区 -->
-    <div class="w-full max-w-7xl bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row h-auto md:h-[750px] border border-gray-200">
+    <div class="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-start flex-grow">
         
-        <!-- 左侧表单区 -->
-        <div class="w-full md:w-1/3 p-6 bg-gray-50 border-r border-gray-200 overflow-y-auto left-panel">
+        <!-- 左侧：交互配置区 -->
+        <div class="space-y-6">
             
-            <div class="mb-6">
-                <h2 class="text-lg font-bold mb-2 text-gray-800 flex items-center">
-                    <span class="bg-blue-600 text-white rounded-full w-6 h-6 inline-flex items-center justify-center text-sm mr-2 shadow-sm">1</span>
-                    粘贴底层 Xray 配置
+            <!-- 步骤 1: 导入 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 transition-all hover:shadow-md">
+                <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                    <span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-xs mr-2 font-mono">01</span>
+                    粘贴 Xray 原始配置
                 </h2>
-                <p class="text-xs text-gray-500 mb-2">去 X-ui 面板的「Xray 配置」里，全选并原封不动复制过来</p>
-                <textarea id="inputConfig" rows="7" class="block w-full rounded-md border-gray-300 shadow-sm border p-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-xs text-gray-700 bg-white" placeholder="{\n  &quot;api&quot;: { ... },\n  &quot;inbounds&quot;: [ ... ],\n  ...\n}"></textarea>
+                <textarea id="inputConfig" rows="8" oninput="handleInput()" class="block w-full rounded-xl border-gray-200 shadow-inner p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-xs text-gray-700 bg-gray-50 transition-colors" placeholder="在此粘贴 X-UI 面板中的 config.json..."></textarea>
+                <div id="parseStatus" class="mt-2 text-xs text-gray-400 italic">等待输入配置...</div>
             </div>
 
-            <div class="mb-6">
-                <h2 class="text-lg font-bold mb-4 text-gray-800 flex items-center">
-                    <span class="bg-blue-600 text-white rounded-full w-6 h-6 inline-flex items-center justify-center text-sm mr-2 shadow-sm">2</span>
-                    配置专属落地节点 (住宅 IP)
+            <!-- 步骤 2: 配置编辑器 -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 transition-all hover:shadow-md">
+                <h2 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                    <span class="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-xs mr-2 font-mono">02</span>
+                    节点与分流管理
                 </h2>
-                <div class="space-y-3">
-                    <div class="flex gap-2">
-                        <div class="w-1/2">
-                            <label class="block text-xs font-medium text-gray-700">协议 <span class="text-red-500">*</span></label>
-                            <select id="proxyProtocol" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500 bg-white">
+                
+                <div class="space-y-5">
+                    <!-- 核心：选择已有标签或添加新节点 -->
+                    <div class="p-4 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+                        <label class="block text-[10px] font-black text-blue-500 uppercase mb-2 tracking-widest">选择操作对象</label>
+                        <select id="nodeSelector" onchange="loadSelectedNode()" class="w-full rounded-lg border-gray-200 text-sm font-bold p-3 bg-white shadow-sm focus:ring-2 focus:ring-blue-500 text-gray-700">
+                            <option value="">-- 请先在步骤 1 粘贴原配置 --</option>
+                        </select>
+                        <p class="text-[10px] text-gray-400 mt-2">提示：选择【添加全新中转节点】可增加分流；选择已有标签可进行内容修改。</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-black text-gray-400 uppercase mb-1 tracking-widest">出站协议</label>
+                            <select id="proxyProtocol" class="w-full rounded-lg border-gray-200 text-sm p-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500">
                                 <option value="socks">SOCKS5</option>
                                 <option value="http">HTTP / HTTPS</option>
                             </select>
                         </div>
-                        <div class="w-1/2">
-                            <label class="block text-xs font-medium text-gray-700">注入模式 <span class="text-red-500">*</span></label>
-                            <select id="injectMode" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500 bg-white">
-                                <option value="append" selected>追加新节点 (多节点分流)</option>
-                                <option value="overwrite">覆盖原有落地节点</option>
-                            </select>
+                        <div>
+                            <label class="block text-[10px] font-black text-gray-400 uppercase mb-1 tracking-widest">当前标签名 (自动生成)</label>
+                            <input type="text" id="proxyTag" class="w-full rounded-lg border-gray-200 text-sm p-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500 font-bold text-blue-600" placeholder="Static-ISP-Proxy-XXX">
                         </div>
                     </div>
 
-                    <div class="flex gap-2">
-                        <div class="w-2/3">
-                            <label class="block text-xs font-medium text-gray-700">代理 IP 地址 <span class="text-red-500">*</span></label>
-                            <input type="text" id="proxyIp" placeholder="例如: 192.200.193.141" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="col-span-2">
+                            <label class="block text-[10px] font-black text-gray-400 uppercase mb-1 tracking-widest">代理服务器地址</label>
+                            <input type="text" id="proxyIp" placeholder="例如: 1.2.3.4" class="w-full rounded-lg border-gray-200 text-sm p-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500">
                         </div>
-                        <div class="w-1/3">
-                            <label class="block text-xs font-medium text-gray-700">端口 <span class="text-red-500">*</span></label>
-                            <input type="number" id="proxyPort" placeholder="6333" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                        <div>
+                            <label class="block text-[10px] font-black text-gray-400 uppercase mb-1 tracking-widest">端口</label>
+                            <input type="number" id="proxyPort" placeholder="6333" class="w-full rounded-lg border-gray-200 text-sm p-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
-                    
-                    <div class="flex gap-2">
-                        <div class="w-1/2">
-                            <label class="block text-xs font-medium text-gray-700">用户名 (可选)</label>
-                            <input type="text" id="proxyUser" placeholder="留空则无验证" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-black text-gray-400 uppercase mb-1 tracking-widest">用户名 (可选)</label>
+                            <input type="text" id="proxyUser" class="w-full rounded-lg border-gray-200 text-sm p-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500">
                         </div>
-                        <div class="w-1/2">
-                            <label class="block text-xs font-medium text-gray-700">密码 (可选)</label>
-                            <input type="text" id="proxyPass" placeholder="留空则无验证" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500">
+                        <div>
+                            <label class="block text-[10px] font-black text-gray-400 uppercase mb-1 tracking-widest">密码 (可选)</label>
+                            <input type="text" id="proxyPass" class="w-full rounded-lg border-gray-200 text-sm p-2.5 bg-gray-50 focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <!-- 修改：更加丰富精美的快捷预设标签 -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-2 gap-2">
+                            <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest shrink-0">关联分流域名 (一行一个)</label>
+                            <div class="flex flex-wrap gap-1.5 justify-start sm:justify-end">
+                                <span class="text-[10px] text-gray-400 flex items-center mr-0.5">快捷添加:</span>
+                                <button onclick="appendPreset('ai')" class="text-[10px] bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-600 hover:text-white px-2 py-1 rounded transition">🤖 AI</button>
+                                <button onclick="appendPreset('payment')" class="text-[10px] bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-600 hover:text-white px-2 py-1 rounded transition">💳 支付</button>
+                                <button onclick="appendPreset('global')" class="text-[10px] bg-rose-50 text-rose-600 border border-rose-200 hover:bg-rose-600 hover:text-white px-2 py-1 rounded transition">🌐 海外全局</button>
+                                <button onclick="appendPreset('google')" class="text-[10px] bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-600 hover:text-white px-2 py-1 rounded transition">🔍 Google</button>
+                                <button onclick="appendPreset('streaming')" class="text-[10px] bg-purple-50 text-purple-600 border border-purple-200 hover:bg-purple-600 hover:text-white px-2 py-1 rounded transition">🎬 流媒体</button>
+                                <button onclick="appendPreset('social')" class="text-[10px] bg-pink-50 text-pink-600 border border-pink-200 hover:bg-pink-600 hover:text-white px-2 py-1 rounded transition">💬 社媒</button>
+                                <button onclick="appendPreset('telegram')" class="text-[10px] bg-sky-50 text-sky-600 border border-sky-200 hover:bg-sky-600 hover:text-white px-2 py-1 rounded transition">✈️ 电报</button>
+                            </div>
+                        </div>
+
+                        <textarea id="proxyDomains" rows="4" class="w-full rounded-lg border-gray-200 text-xs p-3 bg-gray-50 font-mono focus:ring-2 focus:ring-blue-500 transition-all duration-300">geosite:openai
+domain:chatgpt.com
+domain:ipinfo.io</textarea>
+                        <!-- 语法提示网格框 -->
+                        <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[10px] text-gray-500 bg-white p-3 rounded-lg border border-gray-200/80 shadow-sm">
+                            <div class="flex items-start"><span class="font-mono font-bold text-blue-600 w-16 shrink-0">domain:</span> 匹配主域名及所有子域名 (推荐)</div>
+                            <div class="flex items-start"><span class="font-mono font-bold text-blue-600 w-16 shrink-0">geosite:</span> 网站合集或区域 (如 openai, cn)</div>
+                            <div class="flex items-start"><span class="font-mono font-bold text-blue-600 w-16 shrink-0">keyword:</span> 包含该关键字的任意域名</div>
+                            <div class="flex items-start"><span class="font-mono font-bold text-blue-600 w-16 shrink-0">full:</span> 必须完全相等的精准域名</div>
+                            <div class="col-span-1 sm:col-span-2 mt-1 pt-1.5 border-t border-gray-100 text-emerald-600 flex items-center font-bold">
+                                <svg class="w-3.5 h-3.5 mr-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                进阶技巧：若想代理所有海外流量 (排除某国)，请填入 geosite:geolocation-!国家简写 (如 !cn 或 !us)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 操作按钮组 (合并为唯一按钮) -->
+                    <div class="pt-2">
+                        <button onclick="saveSettings()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-100 transition transform active:scale-95 flex items-center justify-center text-sm tracking-wide">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                            💾 保存设置并生成新配置
+                        </button>
+                        
+                        <!-- 黄金位置：强力引流引导区 -->
+                        <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <a href="https://www.youtube.com/@playfulsoul-net" target="_blank" class="flex items-center justify-center bg-red-50 hover:bg-red-100 border border-red-100 text-red-600 text-xs font-bold py-2.5 rounded-xl transition">
+                                <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                                订阅 YouTube 频道
+                            </a>
+                            <a href="https://github.com/playfulsoul/xui-routing-generator" target="_blank" class="flex items-center justify-center bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 text-xs font-bold py-2.5 rounded-xl transition">
+                                <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                                在 GitHub 点亮 Star
+                            </a>
+                            <a href="https://playfulsoul.net" target="_blank" class="flex items-center justify-center bg-blue-50 hover:bg-blue-100 border border-blue-100 text-blue-600 text-xs font-bold py-2.5 rounded-xl transition">
+                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                                访问作者博客
+                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="mb-6">
-                <h2 class="text-lg font-bold mb-2 text-gray-800 flex items-center">
-                    <span class="bg-blue-600 text-white rounded-full w-6 h-6 inline-flex items-center justify-center text-sm mr-2 shadow-sm">3</span>
-                    定制敏感域名分流规则
-                </h2>
-                <p class="text-xs text-gray-500 mb-2">以下网站流量将强制走住宅 IP 出口（一行一个）</p>
-                <textarea id="proxyDomains" rows="5" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm border p-2 text-sm focus:ring-blue-500 focus:border-blue-500 font-mono">
-geosite:openai
-geosite:paypal
-geosite:chase
-geosite:bankofamerica
-domain:ipinfo.io
-domain:chatgpt.com</textarea>
-            </div>
-
-            <button onclick="generateConfig()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-md transition duration-200 transform hover:-translate-y-0.5">
-                🚀 一键注入并生成新配置
-            </button>
-
-            <!-- 注入模式注解：已更新顺序 -->
-            <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100 text-xs text-blue-800 leading-relaxed shadow-sm">
-                <p class="font-bold mb-2 flex items-center text-sm">
-                    <svg class="w-4 h-4 mr-1 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                    注入模式说明
-                </p>
-                <ul class="space-y-1.5 list-disc pl-4 text-blue-700">
-                    <li><span class="font-semibold text-blue-900">追加模式（默认）：</span>保留以前配置好的住宅节点，额外添加新节点。适合高阶玩家配置“多国家多 IP 精准分流”。</li>
-                    <li><span class="font-semibold text-blue-900">覆盖模式：</span>一键清理本工具曾经生成的所有住宅节点，重置为当前最新配置，有效防止配置冲突出错。</li>
-                </ul>
             </div>
         </div>
 
-        <!-- 右侧代码区 -->
-        <div class="w-full md:w-2/3 p-6 relative bg-gray-900 text-gray-100 flex flex-col">
-            <div class="flex justify-between items-center mb-4 shrink-0">
-                <h2 class="text-xl font-bold text-blue-400">最终代码 (点击复制替换)</h2>
-                <button onclick="copyCode()" id="copyBtn" class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold py-2 px-4 rounded shadow transition duration-200 flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                    复制全部代码
-                </button>
-            </div>
-            
-            <!-- 代码高亮区 -->
-            <div class="bg-gray-800 rounded-t-lg p-4 flex-grow overflow-auto flex border border-gray-700 shadow-inner">
-                <div id="lineNumbers" class="text-gray-500 text-sm font-mono text-right pr-3 select-none border-r border-gray-600 mr-3 shrink-0 whitespace-pre pt-1">1</div>
-                <pre id="outputCode" class="text-sm font-mono json-output text-green-300 w-full pt-1 pb-4">等待配置注入...</pre>
-            </div>
-
-            <!-- 动态注入提示备注底栏 -->
-            <div id="injectionInfo" class="bg-gray-800 border-t border-gray-700 rounded-b-lg p-3 hidden flex-col sm:flex-row justify-between items-start sm:items-center text-xs">
-                <div class="flex items-center text-green-400 font-bold mb-2 sm:mb-0">
-                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    成功注入标签：<span id="successTag" class="text-blue-300 font-mono ml-1 bg-gray-700 px-1 rounded">Static-ISP-Proxy</span>
+        <!-- 右侧：代码输出区 -->
+        <div class="space-y-6 lg:sticky lg:top-8">
+            <div class="bg-gray-900 p-6 rounded-3xl shadow-2xl flex flex-col min-h-[600px] lg:h-[800px] border border-gray-800">
+                <div class="flex items-center justify-between mb-4 shrink-0">
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500 mr-4"></div>
+                        <h2 class="text-sm font-bold text-gray-400 font-mono">Xray-Config.json</h2>
+                    </div>
+                    <!-- 修改：删除了 AI 诊断按钮 -->
+                    <button onclick="copyCode()" id="copyBtn" class="bg-white/10 hover:bg-white/20 text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full transition border border-white/5">复制全部</button>
                 </div>
-                <div class="text-gray-400 space-x-0 sm:space-x-4 flex flex-col sm:flex-row">
-                    <span>📦 出站节点：<span id="lineOutbound" class="text-yellow-400 font-mono font-bold">--</span> 行</span>
-                    <span>🔀 分流规则：<span id="lineRouting" class="text-yellow-400 font-mono font-bold">--</span> 行</span>
+                
+                <div class="flex-grow bg-black/40 rounded-2xl overflow-hidden flex relative border border-white/5">
+                    <div id="lineNumbers" class="p-4 text-right font-mono text-[10px] text-gray-600 bg-black/20 select-none border-r border-white/5 min-w-[40px]">1</div>
+                    <pre id="outputCode" class="p-4 font-mono text-[11px] text-emerald-400 overflow-auto w-full custom-scroll">等待导入或生成配置...</pre>
+                </div>
+                
+                <div class="mt-4 p-4 bg-blue-500/5 rounded-xl border border-blue-500/10 flex items-start">
+                    <svg class="w-4 h-4 text-blue-400 mr-3 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <p class="text-[10px] text-gray-400 leading-relaxed italic">
+                        提示：本编辑器会自动识别您的分流规则。当您修改标签名时，对应的路由规则也会同步自动更新，确保配置逻辑严丝合缝。
+                    </p>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!-- 底部引导区 -->
-    <div class="w-full max-w-7xl mt-8 pt-6 border-t border-gray-300 flex flex-col md:flex-row items-center justify-between text-gray-500 text-sm">
-        <div class="mb-4 md:mb-0 text-center md:text-left">
-            <p>💡 如果这个小工具帮到了您，请加入收藏夹！</p>
-            <p class="mt-1">© 2026 Playfulsoul. All Rights Reserved.</p>
-        </div>
-        <div class="flex space-x-4">
-            <a href="https://github.com/playfulsoul/xui-routing-generator" target="_blank" class="flex items-center text-gray-600 hover:text-gray-900 transition font-bold bg-white px-3 py-1.5 rounded-lg shadow-sm border border-gray-200">
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
-                在 GitHub 上点亮 Star ⭐
-            </a>
-            <a href="https://www.youtube.com/@playfulsoul-net" target="_blank" class="flex items-center text-blue-600 hover:text-blue-800 transition font-bold bg-white px-3 py-1.5 rounded-lg shadow-sm border border-gray-200">
-                订阅作者 YouTube
-            </a>
-        </div>
+    <!-- 底部被精简为纯版权声明区 -->
+    <div class="max-w-6xl w-full mx-auto mt-8 pt-6 border-t border-gray-300 flex flex-col items-center justify-center text-gray-400 text-xs">
+        <p>💡 如果这个小工具帮到了您，请将其加入浏览器收藏夹方便下次查阅！</p>
+        <p class="mt-2">© 2026 Playfulsoul. All Rights Reserved.</p>
     </div>
+
+    <!-- 修改：完全删除了底部的 AI 模态框 HTML 及相关 JS 函数 -->
 
     <script>
+        let currentConfig = null;
+
+        function generateRandomSuffix() {
+            return Math.floor(Math.random() * 900) + 100;
+        }
+
         function parseJSONC(str) {
-            let isInsideString = false;
-            let isInsideEscape = false;
-            let result = '';
-            for (let i = 0; i < str.length; i++) {
-                const char = str[i];
-                if (isInsideEscape) { result += char; isInsideEscape = false; continue; }
-                if (char === '\\') { isInsideEscape = true; result += char; continue; }
-                if (char === '"') { isInsideString = !isInsideString; result += char; continue; }
-                if (!isInsideString) {
-                    if (char === '/' && str[i+1] === '/') {
-                        while (i < str.length && str[i] !== '\n') i++;
-                        result += '\n'; continue;
-                    }
-                    if (char === '/' && str[i+1] === '*') {
-                        i += 2;
-                        while (i < str.length - 1 && !(str[i] === '*' && str[i+1] === '/')) i++;
-                        i++; continue;
-                    }
-                }
-                result += char;
+            try {
+                return (new Function("return " + str))();
+            } catch (e) {
+                throw new Error("语法解析失败，请检查是否存在缺少的括号或格式错误。");
             }
-            try { return JSON.parse(result); } 
-            catch (e) { throw new Error("JSON 解析失败。请检查原配置是否有漏掉的逗号或括号！\n报错信息: " + e.message); }
         }
 
-        function findLineRange(fullString, searchKey, blockLinesLength) {
-            const index = fullString.indexOf(searchKey);
-            if (index === -1) return "--";
-            const upToKeyword = fullString.substring(0, index);
-            const startLine = upToKeyword.split('\n').length - 2;
-            const endLine = startLine + blockLinesLength;
-            return `第 ${startLine} ~ ${endLine}`;
+        function handleInput() {
+            const val = document.getElementById('inputConfig').value.trim();
+            const status = document.getElementById('parseStatus');
+            
+            if (!val) { status.innerText = "等待输入配置..."; return; }
+            
+            try {
+                currentConfig = parseJSONC(val);
+                status.innerText = "✅ 配置解析成功";
+                status.className = "mt-2 text-xs text-green-500 font-bold";
+                
+                updateSelector("NEW");
+                loadSelectedNode();
+                updateOutput();
+            } catch (e) {
+                status.innerText = "❌ JSON 格式错误: " + e.message;
+                status.className = "mt-2 text-xs text-red-500 font-bold";
+            }
         }
 
-        function generateConfig() {
-            const inputConfigText = document.getElementById('inputConfig').value.trim();
+        function updateSelector(forceSelectValue = null) {
+            const selector = document.getElementById('nodeSelector');
+            const currentTag = forceSelectValue !== null ? forceSelectValue : selector.value;
+            
+            selector.innerHTML = '<option value="NEW" class="font-bold text-blue-600">➕ 添加全新中转节点</option>';
+            
+            if (currentConfig && currentConfig.outbounds) {
+                if (currentConfig.outbounds.length > 0) {
+                    const separator = document.createElement('option');
+                    separator.disabled = true;
+                    separator.text = "--- 📝 编辑已有节点 ---";
+                    selector.appendChild(separator);
+                }
+
+                currentConfig.outbounds.forEach(out => {
+                    const option = document.createElement('option');
+                    option.value = out.tag;
+                    option.text = `[${out.protocol.toUpperCase()}] ${out.tag}`;
+                    selector.appendChild(option);
+                });
+            }
+            
+            if (currentTag && Array.from(selector.options).some(opt => opt.value === currentTag)) {
+                selector.value = currentTag;
+            } else {
+                selector.value = "NEW";
+            }
+        }
+
+        function loadSelectedNode() {
+            const tag = document.getElementById('nodeSelector').value;
+            if (!currentConfig) return;
+
+            if (tag === "NEW") {
+                document.getElementById('proxyTag').value = `Static-ISP-Proxy-${generateRandomSuffix()}`;
+                document.getElementById('proxyProtocol').value = 'socks';
+                document.getElementById('proxyIp').value = '';
+                document.getElementById('proxyPort').value = '';
+                document.getElementById('proxyUser').value = '';
+                document.getElementById('proxyPass').value = '';
+                document.getElementById('proxyDomains').value = "geosite:openai\ndomain:chatgpt.com\ndomain:ipinfo.io";
+                return;
+            }
+
+            const out = currentConfig.outbounds.find(o => o.tag === tag);
+            if (!out) return;
+
+            document.getElementById('proxyTag').value = out.tag;
+            document.getElementById('proxyProtocol').value = (out.protocol === 'http' || out.protocol === 'socks') ? out.protocol : 'socks';
+
+            let addr = "", port = "", userStr = "", passStr = "";
+            
+            if (out.settings?.servers?.[0]) {
+                addr = out.settings.servers[0].address || "";
+                port = out.settings.servers[0].port || "";
+                const userObj = out.settings.servers[0].users?.[0];
+                userStr = userObj?.user || userObj?.username || "";
+                passStr = userObj?.pass || userObj?.password || "";
+            } else if (out.settings?.vnext?.[0]) {
+                addr = out.settings.vnext[0].address || "";
+                port = out.settings.vnext[0].port || "";
+            }
+            
+            document.getElementById('proxyIp').value = addr;
+            document.getElementById('proxyPort').value = port;
+            document.getElementById('proxyUser').value = userStr;
+            document.getElementById('proxyPass').value = passStr;
+
+            const rule = currentConfig.routing.rules.find(r => r.outboundTag === tag);
+            document.getElementById('proxyDomains').value = rule ? (rule.domain || []).join('\n') : "";
+        }
+
+        function getFormData() {
             const protocol = document.getElementById('proxyProtocol').value;
-            const injectMode = document.getElementById('injectMode').value;
+            const tag = document.getElementById('proxyTag').value.trim();
             const ip = document.getElementById('proxyIp').value.trim();
             const port = parseInt(document.getElementById('proxyPort').value.trim());
             const user = document.getElementById('proxyUser').value.trim();
             const pass = document.getElementById('proxyPass').value.trim();
-            const domainsText = document.getElementById('proxyDomains').value;
+            const domains = document.getElementById('proxyDomains').value.split('\n').map(d => d.trim()).filter(d => d);
 
-            if (!inputConfigText) { alert("请先在第一步粘贴原有的 Xray 配置！"); return; }
-            if (!ip || !port) { alert("代理 IP 和 端口不能为空！"); return; }
+            if (!tag || !ip || !port) { alert("标签名、代理服务器地址 和 端口 是必填项！"); return null; }
 
-            let config;
-            try { config = parseJSONC(inputConfigText); } 
-            catch (error) { alert(error.message); return; }
-
-            let tagId = "Static-ISP-Proxy";
-            if (injectMode === "append") {
-                const safeIp = ip.replace(/[^a-zA-Z0-9]/g, '-');
-                tagId = "Static-ISP-Proxy-" + safeIp;
-            }
-
-            let staticIspOutbound = {
-                "tag": tagId,
+            const outbound = {
+                "tag": tag,
                 "protocol": protocol,
                 "settings": { "servers": [{ "address": ip, "port": port }] }
             };
             if (user && pass) {
-                staticIspOutbound.settings.servers[0].users = [{ "user": user, "pass": pass }];
+                outbound.settings.servers[0].users = [{ "user": user, "pass": pass }];
             }
 
-            let domainList = domainsText.split('\n').map(d => d.trim()).filter(d => d !== '');
-            let staticIspRoutingRule = {
+            const rule = {
                 "type": "field",
-                "outboundTag": tagId,
-                "domain": domainList
+                "outboundTag": tag,
+                "domain": domains
             };
 
-            if (!config.outbounds) config.outbounds = [];
-            if (!config.routing) config.routing = { rules: [] };
-            if (!config.routing.rules) config.routing.rules = [];
+            return { tag, outbound, rule };
+        }
 
-            if (injectMode === "overwrite") {
-                config.outbounds = config.outbounds.filter(out => {
-                    if (!out.tag) return true;
-                    return !out.tag.startsWith("Static-ISP-Proxy") && out.tag !== "Static-ISP-socks5";
-                });
-                config.routing.rules = config.routing.rules.filter(rule => {
-                    if (!rule.outboundTag) return true;
-                    return !rule.outboundTag.startsWith("Static-ISP-Proxy") && rule.outboundTag !== "Static-ISP-socks5";
-                });
+        function saveSettings() {
+            if (!currentConfig) { alert("请先在步骤 1 粘贴原始 Xray 配置！"); return; }
+            
+            const selectedAction = document.getElementById('nodeSelector').value;
+            const data = getFormData();
+            if (!data) return;
+
+            if (selectedAction === "NEW") {
+                if (currentConfig.outbounds.some(o => o.tag === data.tag)) {
+                    alert("检测到标签名冲突！该标签已存在，请修改后重试。");
+                    return;
+                }
+                
+                const directIndex = currentConfig.outbounds.findIndex(o => o.tag === "direct");
+                currentConfig.outbounds.splice(directIndex > -1 ? directIndex + 1 : 0, 0, data.outbound);
+                currentConfig.routing.rules.unshift(data.rule);
+                
             } else {
-                config.outbounds = config.outbounds.filter(out => out.tag !== tagId);
-                config.routing.rules = config.routing.rules.filter(rule => rule.outboundTag !== tagId);
+                const outIndex = currentConfig.outbounds.findIndex(o => o.tag === selectedAction);
+                if (outIndex > -1) {
+                    currentConfig.outbounds[outIndex] = data.outbound;
+                }
+
+                const ruleIndex = currentConfig.routing.rules.findIndex(r => r.outboundTag === selectedAction);
+                if (ruleIndex > -1) {
+                    currentConfig.routing.rules[ruleIndex] = data.rule;
+                } else {
+                    currentConfig.routing.rules.unshift(data.rule);
+                }
             }
 
-            let insertIndex = config.outbounds.findIndex(out => out.tag === "direct") + 1;
-            config.outbounds.splice(insertIndex > 0 ? insertIndex : 0, 0, staticIspOutbound);
-
-            let ruleIndex = config.routing.rules.findIndex(rule => rule.outboundTag !== "api");
-            config.routing.rules.splice(ruleIndex > -1 ? ruleIndex : 0, 0, staticIspRoutingRule);
-
-            const finalJsonString = JSON.stringify(config, null, 2);
-            document.getElementById('outputCode').textContent = finalJsonString;
-
-            const lineCount = finalJsonString.split('\n').length;
-            const lineNumbersHtml = Array.from({length: lineCount}, (_, i) => i + 1).join('\n');
-            document.getElementById('lineNumbers').textContent = lineNumbersHtml;
-
-            const userLines = user && pass ? 10 : 8;
-            const routeLines = domainList.length + 3;
+            updateSelector(data.tag);
+            updateOutput();
             
-            document.getElementById('successTag').textContent = tagId;
-            document.getElementById('lineOutbound').textContent = findLineRange(finalJsonString, `"tag": "${tagId}"`, userLines);
-            document.getElementById('lineRouting').textContent = findLineRange(finalJsonString, `"outboundTag": "${tagId}"`, routeLines);
+            const btn = document.querySelector('button[onclick="saveSettings()"]');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '✅ 操作成功！代码已更新';
+            btn.classList.replace('bg-blue-600', 'bg-green-600');
+            btn.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.replace('bg-green-600', 'bg-blue-600');
+                btn.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
+            }, 2000);
+        }
+
+        function updateOutput() {
+            const json = JSON.stringify(currentConfig, null, 2);
+            document.getElementById('outputCode').textContent = json;
             
-            const infoBox = document.getElementById('injectionInfo');
-            infoBox.classList.remove('hidden');
-            infoBox.classList.add('flex');
+            const lines = json.split('\n').length;
+            let numStr = "";
+            for(let i=1; i<=lines; i++) numStr += i + "\n";
+            document.getElementById('lineNumbers').innerText = numStr;
         }
 
         function copyCode() {
-            const codeText = document.getElementById('outputCode').textContent;
-            if (codeText.includes('等待配置注入')) { alert("请先点击注入并生成配置！"); return; }
+            const code = document.getElementById('outputCode').textContent;
+            if (code.includes('等待导入')) return;
             
-            navigator.clipboard.writeText(codeText).then(() => {
+            navigator.clipboard.writeText(code).then(() => {
                 const btn = document.getElementById('copyBtn');
-                const originalHtml = btn.innerHTML;
-                btn.innerHTML = `<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> 复制成功！`;
-                btn.classList.replace('bg-green-600', 'bg-blue-600');
-                btn.classList.replace('hover:bg-green-700', 'hover:bg-blue-700');
-                setTimeout(() => {
-                    btn.innerHTML = originalHtml;
-                    btn.classList.replace('bg-blue-600', 'bg-green-600');
-                    btn.classList.replace('hover:bg-blue-700', 'hover:bg-green-700');
-                }, 2000);
-            }).catch(err => {
-                const textArea = document.createElement("textarea");
-                textArea.value = codeText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                try { document.execCommand('copy'); } catch (err) {}
-                document.body.removeChild(textArea);
+                btn.innerText = "COPIED! ✅";
+                setTimeout(() => btn.innerText = "复制全部", 2000);
             });
         }
+
+        // ==========================================
+        // 📚 静态常用规则预设库 (扩展补充版)
+        // ==========================================
+        const rulePresets = {
+            'ai': "geosite:openai\ngeosite:anthropic\ndomain:gemini.google.com\ndomain:meta.ai",
+            'payment': "geosite:paypal\ndomain:stripe.com\ndomain:wise.com\ngeosite:chase",
+            'global': "geosite:geolocation-!cn",
+            'google': "geosite:google",
+            'streaming': "geosite:netflix\ngeosite:youtube\ngeosite:disney\ngeosite:spotify",
+            'social': "geosite:facebook\ngeosite:twitter\ngeosite:instagram\ngeosite:tiktok",
+            'telegram': "geosite:telegram"
+        };
+
+        function appendPreset(type) {
+            const textarea = document.getElementById('proxyDomains');
+            let currentVal = textarea.value.trim();
+            const rulesToAdd = rulePresets[type];
+            
+            // 简单查重机制：如果文本框里已经有这组规则的第一行，就不再重复追加
+            const firstRule = rulesToAdd.split('\n')[0];
+            if (currentVal.includes(firstRule)) {
+                return; // 防止用户狂点重复添加
+            }
+
+            // 拼接规则
+            textarea.value = currentVal ? currentVal + '\n' + rulesToAdd : rulesToAdd;
+            
+            // 视觉反馈：让文本框闪烁一下，告诉用户已添加成功
+            textarea.classList.add('bg-blue-100', 'ring-4', 'ring-blue-300');
+            setTimeout(() => {
+                textarea.classList.remove('bg-blue-100', 'ring-4', 'ring-blue-300');
+            }, 300);
+            
+            // 滚动到最底部方便查看
+            textarea.scrollTop = textarea.scrollHeight;
+        }
+
     </script>
 </body>
 </html>
